@@ -69,8 +69,8 @@ public class ChatCommandLineRunner {
         private final RoleService roleService;
         private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        private static final String USERNAME = "Джулиян";
-        private static final String PASSWORD = "0898351444";
+        private static final String USERNAME = "admin";
+        private static final String PASSWORD = "admin";
 
         @Autowired
         public UserCommandLineRunner(UserRepository userRepository, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
