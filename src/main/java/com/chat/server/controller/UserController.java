@@ -34,7 +34,7 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register")
     public ResponseEntity<UserView> register(@RequestBody @Valid UserView userView, final BindingResult result) {
         if(result.hasErrors()) {
             log.error("Errors in register method validations.");
