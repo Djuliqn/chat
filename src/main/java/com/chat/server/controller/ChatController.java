@@ -20,12 +20,16 @@ import org.springframework.stereotype.Controller;
 @Slf4j
 @Controller
 public class ChatController {
-    
-    @Autowired
+
     private SimpMessagingTemplate webSocket;
+
+    @Autowired
+    public ChatController(SimpMessagingTemplate webSocket) {
+        this.webSocket = webSocket;
+    }
     
     @MessageMapping("/chat")
-    public void sendMessage(Message<MessageView> message, @Payload MessageView messageView) throws Exception {
+    public void sendMessage(Message<MessageView> message, @Payload MessageView messageView) {
     	
         Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
         if (principal == null) {
