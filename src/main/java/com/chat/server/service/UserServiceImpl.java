@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ChatClientException("Записът не е намерен."));
+        return userRepository.findById(id).orElseThrow(() -> new ChatClientException("The record does not exists."));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         try {
-            Assert.notNull(user, "Моля попълнете данни за потребителят.");
+            Assert.notNull(user, "Please fill the data for user");
 
             User newUser = User.builder()
                     .status(Status.OFFLINE)
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(newUser);
         } catch (DataIntegrityViolationException ex) {
             log.error(ex.getMessage(), ex);
-            throw new ChatClientException("Съществува запис с това име.");
+            throw new ChatClientException("The record with that name exists.");
         } catch (IllegalArgumentException ex) {
             log.error(ex.getMessage(), ex);
             throw new ChatClientException(ex.getMessage());
@@ -66,11 +66,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
         try {
-            Assert.notNull(user, "Моля попълнете данни за потребителят.");
+            Assert.notNull(user, "Please fill the data for user");
             return userRepository.save(user);
         } catch(DataIntegrityViolationException ex) {
             log.error(ex.getMessage(), ex);
-            throw new ChatClientException("Съществува запис с това име.");
+            throw new ChatClientException("The record with that name exists.");
         } catch (IllegalArgumentException ex) {
             log.error(ex.getMessage(), ex);
             throw new ChatClientException(ex.getMessage());
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) {
         Optional<User> user = userRepository.findOneByUsername(username);
 
-        user.orElseThrow(() -> new ChatClientException("Грешно потребителско име."));
+        user.orElseThrow(() -> new ChatClientException("Wrong credentials."));
 
         return user.get();
     }

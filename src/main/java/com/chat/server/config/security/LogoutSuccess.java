@@ -2,6 +2,7 @@ package com.chat.server.config.security;
 
 import com.chat.server.model.Status;
 import com.chat.server.model.User;
+import com.chat.server.repository.UserRepository;
 import com.chat.server.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ import static com.google.common.collect.Maps.newHashMap;
 public class LogoutSuccess implements LogoutSuccessHandler {
 
     private ObjectMapper objectMapper;
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    public LogoutSuccess(ObjectMapper objectMapper, UserService userService) {
+    public LogoutSuccess(ObjectMapper objectMapper, UserRepository userRepository) {
         this.objectMapper = objectMapper;
-        this.userService= userService;
+        this.userRepository= userRepository;
     }
 
     @Override
@@ -35,9 +36,7 @@ public class LogoutSuccess implements LogoutSuccessHandler {
         Map<String, String> result = newHashMap();
 
         User user = (User) authentication.getPrincipal();
-        User loadedUser = (User) userService.loadUserByUsername(user.getUsername());
-        loadedUser = loadedUser.toBuilder().status(Status.OFFLINE).build();
-        userService.saveUser(loadedUser);
+        userRepository.save(user.toBuilder().status(Status.OFFLINE).build());
 
         result.put("result", "success");
         response.setContentType("application/json");
