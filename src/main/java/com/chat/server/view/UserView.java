@@ -1,5 +1,6 @@
 package com.chat.server.view;
 
+import com.chat.server.annotation.password.PasswordMatching;
 import com.chat.server.model.Role;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @EqualsAndHashCode
 @ToString
+@PasswordMatching(password = "password", confirmPassword = "confirmPassword")
 public class UserView {
 
     private Long id;

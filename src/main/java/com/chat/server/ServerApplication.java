@@ -1,5 +1,6 @@
 package com.chat.server;
 
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,4 +18,7 @@ public class ServerApplication {
     public BCryptPasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public BeanWrapperImpl getBeanWrapperImpl() { return new BeanWrapperImpl(); }
 }
