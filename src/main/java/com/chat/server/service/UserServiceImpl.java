@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         try {
             Assert.notNull(user, "Моля попълнете данни за потребителят.");
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
                     .role(roleRepository.findOneByRoleName(RoleName.ROLE_USER))
                     .build();
 
-            userRepository.save(newUser);
+            return userRepository.save(newUser);
         } catch (DataIntegrityViolationException ex) {
             log.error(ex.getMessage(), ex);
             throw new ChatClientException("Съществува запис с това име.");
