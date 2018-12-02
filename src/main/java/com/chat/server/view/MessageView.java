@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-@Builder
+@Builder(toBuilder = true)
 @EqualsAndHashCode
 @Getter
 @AllArgsConstructor
