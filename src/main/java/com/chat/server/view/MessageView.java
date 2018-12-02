@@ -17,9 +17,7 @@ public class MessageView {
 
     private String username;
     
-    private List<String> targets;
-    
-    private MessageType type;
+    private List<MessageRecipient> recipients;
 
     private String text;
 
