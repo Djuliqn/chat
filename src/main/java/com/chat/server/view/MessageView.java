@@ -8,10 +8,11 @@ import java.util.List;
 
 @Component
 @Builder(toBuilder = true)
-@EqualsAndHashCode
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class MessageView {
 
     private String username;
