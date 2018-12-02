@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Setter(value = AccessLevel.PACKAGE)
 @Getter
 @EqualsAndHashCode
 @ToString
