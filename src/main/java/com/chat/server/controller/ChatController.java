@@ -1,28 +1,51 @@
 package com.chat.server.controller;
 
+import com.chat.server.view.OutputMessageView;
+import com.chat.server.view.MessageRecipient;
 import com.chat.server.view.MessageView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
+
+import java.security.Principal;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import javax.management.Notification;
-import java.security.Principal;
-
+@Slf4j
 @Controller
 public class ChatController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
+    private SimpMessagingTemplate webSocket;
 
-    @MessageMapping("/message")
-    public void handleShout(String message) {
-        logger.info("Received message: " + message);
+    @Autowired
+    public ChatController(SimpMessagingTemplate webSocket) {
+        this.webSocket = webSocket;
     }
+    
+    @MessageMapping("/chat")
+    public void sendMessage(Message<MessageView> message, @Payload MessageView messageView) {
+    	
+        Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
+        if (principal == null) {
+            log.error("Principal is null");
+            return;
+        }
 
-    @MessageMapping("/spittle")
-    @SendToUser("/queue/notifications")
-    public Notification handleSpittle(Principal principal, MessageView messageView) {
-        return null;
+        List<MessageRecipient> recipients = messageView.getRecipients();
+        for (MessageRecipient recipient : recipients) {
+        	if (MessageRecipient.RecipientType.USER.equals(recipient.getRecipientType())) {
+		        webSocket.convertAndSendToUser(recipient.getRecipientName(), "/queue/messages",
+		        		OutputMessageView.builder().sender(messageView.getUsername()).text(messageView.getText()).date(messageView.getDate()).build());
+        	} else {
+        		webSocket.convertAndSend("/queue/messages/group/"+recipient.getRecipientName(),
+        				OutputMessageView.builder().sender(messageView.getUsername()).text(messageView.getText()).date(messageView.getDate()).build());
+        	}
+        }
     }
 }

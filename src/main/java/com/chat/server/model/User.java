@@ -13,7 +13,6 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newHashSet;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Setter(value = AccessLevel.PACKAGE)
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -52,16 +51,6 @@ public class User implements UserDetails {
         roles.add(role);
 
         return roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override

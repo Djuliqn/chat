@@ -37,7 +37,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         final User foundUser = (User) userService.loadUserByUsername(username);
 
         if(!bCryptPasswordEncoder.matches(password, foundUser.getPassword())) {
-            throw new ChatClientException("Грешна парола.");
+            throw new ChatClientException("Wrong password");
         }
 
         return new UsernamePasswordAuthenticationToken(
