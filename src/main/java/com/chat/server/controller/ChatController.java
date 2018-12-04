@@ -31,11 +31,11 @@ public class ChatController {
     @MessageMapping("/chat")
     public void sendMessage(Message<MessageView> message, @Payload MessageView messageView) {
     	
-        Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
-        if (principal == null) {
-            log.error("Principal is null");
-            return;
-        }
+//        Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
+//        if (principal == null) {
+//            log.error("Principal is null");
+//            return;
+//        }
 
         List<MessageRecipient> recipients = messageView.getRecipients();
         for (MessageRecipient recipient : recipients) {

@@ -1,19 +1,9 @@
 package com.chat.server.view;
 
-import java.time.LocalDate;
-import java.util.List;
 
+import lombok.*;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
-
-import com.chat.server.view.MessageView.MessageViewBuilder;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Component
 @Builder(toBuilder = true)
