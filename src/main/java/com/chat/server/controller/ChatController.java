@@ -40,8 +40,10 @@ public class ChatController {
         List<MessageRecipient> recipients = messageView.getRecipients();
         for (MessageRecipient recipient : recipients) {
         	if (MessageRecipient.RecipientType.USER.equals(recipient.getRecipientType())) {
-		        webSocket.convertAndSendToUser(recipient.getRecipientName(), "/queue/messages",
-		        		OutputMessageView.builder().sender(messageView.getUsername()).text(messageView.getText()).date(messageView.getDate()).build());
+		        //webSocket.convertAndSendToUser(recipient.getRecipientName(), "/queue/messages",
+		        //		OutputMessageView.builder().sender(messageView.getUsername()).text(messageView.getText()).date(messageView.getDate()).build());
+        		webSocket.convertAndSend("/topic/messages",
+        		        		OutputMessageView.builder().sender(messageView.getUsername()).text(messageView.getText()).date(messageView.getDate()).build());
         	} else {
         		webSocket.convertAndSend("/queue/messages/group/"+recipient.getRecipientName(),
         				OutputMessageView.builder().sender(messageView.getUsername()).text(messageView.getText()).date(messageView.getDate()).build());
