@@ -11,12 +11,14 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.google.common.collect.Lists.newCopyOnWriteArrayList;
 
 @Slf4j
 @Configuration
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    /* Websocket endpoint that the clients will use to connect to our websocket server. */
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
         webSocketHandlerRegistry.addHandler(new SocketHandler(), "/web-socket");
@@ -24,7 +26,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     public class SocketHandler extends TextWebSocketHandler {
 
-        private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+        private List<WebSocketSession> sessions = newCopyOnWriteArrayList();
 
         @Override
         public void afterConnectionEstablished(WebSocketSession session) throws Exception {

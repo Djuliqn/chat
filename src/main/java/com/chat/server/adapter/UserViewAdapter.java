@@ -15,6 +15,7 @@ public class UserViewAdapter {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .role(user.getRole())
+                .status(user.getStatus())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public class UserViewAdapter {
                 .username(userView.getUsername())
                 .password(userView.getPassword())
                 .role(userView.getRole())
+                .status(userView.getStatus())
                 .build();
     }
 }

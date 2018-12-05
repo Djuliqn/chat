@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllOnlineUsers() {
+        return userRepository.findAllByStatus(Status.ONLINE);
+    }
+
+    @Override
     public User saveUser(User user) {
         try {
             Assert.notNull(user, "Please fill the data for user");

@@ -12,12 +12,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/user", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -47,5 +46,10 @@ public class UserController {
         userService.saveUser(user);
 
         return ResponseEntity.ok(UserViewAdapter.adapt(user));
+    }
+
+    @GetMapping(value = "/online-users")
+    public ResponseEntity<List<UserView>> getAllOnlineUsers() {
+        return ResponseEntity.ok(userService.getAllOnlineUsers().stream().map(UserViewAdapter::adapt).collect(Collectors.toList()));
     }
 }
